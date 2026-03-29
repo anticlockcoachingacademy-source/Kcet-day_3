@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>KCET 2026 – Day 3 | Anticlock Coaching Academy</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root{
+    --navy:#0A1F44; --navy2:#0d2655; --gold:#C9A84C; --gold2:#e8c45e;
+    --phy:#3B6FE8; --phy-bg:#EEF3FD; --phy-dark:#1a3fa0;
+    --chem:#1BAA6B; --chem-bg:#E8F8F1; --chem-dark:#0d7a4d;
+    --math:#9B5DE5; --math-bg:#F3ECFD; --math-dark:#6d2fbf;
+    --bg:#F4F6FB; --white:#FFFFFF;
+    --text:#1a1a2e; --text2:#444466; --text3:#888;
+    --must:#E74C3C; --imp:#E67E22; --med:#2ECC71;
+    --radius:12px; --shadow:0 2px 16px rgba(10,31,68,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+  /* ── HEADER ── */
+  .header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);padding:18px 16px 0;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,.25);}
+  .header-top{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .ac-logo{width:42px;height:42px;background:var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:var(--navy);flex-shrink:0;}
+  .header-title h1{font-family:'Syne',sans-serif;color:var(--white);font-size:15px;font-weight:700;line-height:1.1;}
+  .header-title p{color:rgba(255,255,255,.55);font-size:10px;font-weight:500;letter-spacing:.05em;margin-top:2px;}
+  .stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(255,255,255,.1);border-radius:10px;overflow:hidden;margin-bottom:12px;}
+  .stat-box{background:rgba(255,255,255,.07);padding:8px;text-align:center;}
+  .stat-num{font-family:'Syne',sans-serif;color:var(--gold);font-size:18px;font-weight:800;line-height:1;}
+  .stat-label{color:rgba(255,255,255,.5);font-size:9px;font-weight:500;letter-spacing:.06em;margin-top:2px;display:block;}
+  .exam-date{color:var(--gold2);font-size:13px;font-weight:700;text-align:center;margin:4px 0 8px;font-family:'Syne',sans-serif;}
+  .exam-date span{display:block;font-size:9px;color:rgba(255,255,255,.45);font-weight:400;letter-spacing:.08em;}
+  .day-banner{background:rgba(201,168,76,.18);border-left:3px solid var(--gold);border-radius:6px;padding:8px 12px;margin-bottom:12px;font-size:11px;color:var(--gold2);font-weight:600;display:flex;align-items:center;gap:6px;}
+
+  /* ── TABS ── */
+  .tabs{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab-btn{flex-shrink:0;padding:10px 14px;font-size:12px;font-weight:600;color:rgba(255,255,255,.5);background:transparent;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;font-family:'DM Sans',sans-serif;white-space:nowrap;}
+  .tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
+  .tab-btn:hover{color:rgba(255,255,255,.85);}
+
+  /* ── CONTENT ── */
+  .content{padding:16px;}
+  .tab-pane{display:none;}
+  .tab-pane.active{display:block;}
+  .section-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+
+  /* ── SUBJECT CARDS ── */
+  .subject-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;}
+  .subj-card{border-radius:var(--radius);padding:12px;position:relative;overflow:hidden;}
+  .subj-card.phy{background:var(--phy-bg);border:1.5px solid rgba(59,111,232,.2);}
+  .subj-card.chem{background:var(--chem-bg);border:1.5px solid rgba(27,170,107,.2);}
+  .subj-card.math{background:var(--math-bg);border:1.5px solid rgba(155,93,229,.2);}
+  .subj-label{font-size:9px;font-weight:700;letter-spacing:.1em;opacity:.65;margin-bottom:4px;}
+  .subj-card.phy .subj-label{color:var(--phy-dark);}
+  .subj-card.chem .subj-label{color:var(--chem-dark);}
+  .subj-card.math .subj-label{color:var(--math-dark);}
+  .subj-name{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;margin-bottom:6px;line-height:1.2;}
+  .subj-card.phy .subj-name{color:var(--phy);}
+  .subj-card.chem .subj-name{color:var(--chem);}
+  .subj-card.math .subj-name{color:var(--math);}
+  .marks-pill{display:inline-block;font-size:9px;font-weight:700;border-radius:20px;padding:2px 7px;margin-bottom:6px;}
+  .subj-card.phy .marks-pill{background:var(--phy);color:#fff;}
+  .subj-card.chem .marks-pill{background:var(--chem);color:#fff;}
+  .subj-card.math .marks-pill{background:var(--math);color:#fff;}
+  .subj-time{font-size:11px;font-weight:700;color:var(--text);}
+  .subj-time span{font-size:9px;font-weight:400;color:var(--text3);display:block;margin-top:2px;}
+
+  /* ── TIMETABLE ── */
+  .day-mission{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--radius);padding:14px;margin-bottom:16px;position:relative;overflow:hidden;}
+  .day-mission::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:var(--gold);opacity:.08;border-radius:50%;}
+  .day-mission h2{font-family:'Syne',sans-serif;color:var(--gold);font-size:14px;font-weight:800;margin-bottom:6px;}
+  .day-mission p{color:rgba(255,255,255,.72);font-size:11px;line-height:1.6;}
+  .tbl-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+  .timetable{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+  .tbl-head{display:grid;grid-template-columns:90px 1fr 80px 68px 60px;background:var(--navy);padding:8px 10px;gap:6px;}
+  .tbl-head span{font-size:9px;font-weight:700;color:var(--gold);letter-spacing:.08em;}
+  .tbl-row{display:grid;grid-template-columns:90px 1fr 80px 68px 60px;padding:9px 10px;gap:6px;align-items:start;border-bottom:1px solid #eef;}
+  .tbl-row:nth-child(odd){background:#fff;}
+  .tbl-row:nth-child(even){background:#fafbff;}
+  .tbl-row.break-row{background:#f9f4e8 !important;}
+  .tbl-time{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--text3);font-weight:600;padding-top:2px;}
+  .tbl-act{font-size:11px;font-weight:600;color:var(--text);}
+  .tbl-act small{display:block;font-size:9px;font-weight:400;color:var(--text3);margin-top:2px;line-height:1.4;}
+  .tbl-subj{text-align:center;}
+  .subj-badge{display:inline-block;font-size:8px;font-weight:700;padding:2px 7px;border-radius:20px;}
+  .b-phy{background:var(--phy);color:#fff;}
+  .b-chem{background:var(--chem);color:#fff;}
+  .b-math{background:var(--math);color:#fff;}
+  .b-break{background:#DDD;color:#555;}
+  .b-mock{background:#FF6B35;color:#fff;}
+  .b-rev{background:#6C5CE7;color:#fff;}
+  .b-all{background:var(--navy);color:var(--gold);}
+  .tbl-dur{font-size:10px;font-weight:600;color:var(--text2);}
+  .tbl-pri{font-size:9px;font-weight:700;display:flex;align-items:center;gap:3px;}
+  .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+  .dot.high{background:var(--must);}
+  .dot.med{background:var(--imp);}
+  .dot.low{background:var(--med);}
+  .tbl-footer{background:var(--navy);padding:10px 14px;display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+  .footer-stat{display:flex;align-items:center;gap:6px;font-size:10px;}
+  .footer-stat span:first-child{font-size:13px;}
+  .footer-stat b{color:var(--gold);}
+  .footer-stat p{color:rgba(255,255,255,.7);}
+
+  /* ── TOPICS ── */
+  .topics-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+  .topic-col{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+  .topic-col.full{grid-column:1/-1;}
+  .topic-header{padding:10px 14px;font-family:'Syne',sans-serif;font-size:12px;font-weight:800;display:flex;align-items:center;gap:6px;}
+  .topic-header.phy{background:var(--phy);color:#fff;}
+  .topic-header.chem{background:var(--chem);color:#fff;}
+  .topic-header.math{background:var(--math);color:#fff;}
+  .topic-header.cheat{background:var(--gold);color:var(--navy);}
+  .topic-item{background:#fff;padding:9px 12px;border-bottom:1px solid #f0f0f8;display:flex;gap:9px;align-items:flex-start;}
+  .topic-item:last-child{border-bottom:none;}
+  .tag{font-size:8px;font-weight:800;padding:2px 6px;border-radius:4px;flex-shrink:0;margin-top:1px;letter-spacing:.04em;}
+  .tag.must{background:#FDECEC;color:var(--must);}
+  .tag.imp{background:#FEF4E8;color:var(--imp);}
+  .tag.med{background:#EAFAF1;color:#1E8449;}
+  .topic-name{font-size:11px;font-weight:700;color:var(--text);line-height:1.3;}
+  .topic-desc{font-size:10px;color:var(--text3);margin-top:2px;line-height:1.4;}
+  .cheat-item{background:#fff;padding:9px 12px;border-bottom:1px solid #f9f4e0;display:flex;gap:8px;}
+  .cheat-item:last-child{border-bottom:none;}
+  .cheat-label{font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px;flex-shrink:0;margin-top:1px;}
+  .cl-phy{background:var(--phy-bg);color:var(--phy-dark);}
+  .cl-chem{background:var(--chem-bg);color:var(--chem-dark);}
+  .cl-math{background:var(--math-bg);color:var(--math-dark);}
+  .cheat-text{font-size:10px;color:var(--text);line-height:1.5;}
+
+  /* ── FORMULAS ── */
+  .formula-section{margin-bottom:16px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+  .formula-header{padding:10px 14px;display:flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;}
+  .formula-header.phy{background:var(--phy);color:#fff;}
+  .formula-header.chem{background:var(--chem);color:#fff;}
+  .formula-header.math{background:var(--math);color:#fff;}
+  .formula-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+  .formula-item{background:#fff;padding:10px 12px;border-bottom:1px solid #eef;border-right:1px solid #eef;}
+  .formula-item:nth-child(even){border-right:none;}
+  .f-label{font-size:8.5px;font-weight:700;color:var(--text3);letter-spacing:.06em;margin-bottom:4px;}
+  .f-expr{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:3px;}
+  .f-note{font-size:9px;color:var(--text3);line-height:1.4;}
+
+  /* ── MOCK TEST ── */
+  .mock-header{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:var(--radius);padding:14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:flex-start;}
+  .mock-header h2{font-family:'Syne',sans-serif;color:var(--white);font-size:14px;font-weight:800;}
+  .mock-header p{color:rgba(255,255,255,.6);font-size:10px;margin-top:4px;max-width:200px;line-height:1.5;}
+  .mock-total{background:var(--gold);color:var(--navy);border-radius:10px;padding:8px 12px;text-align:center;}
+  .mock-total .num{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;line-height:1;}
+  .mock-total .lbl{font-size:9px;font-weight:700;margin-top:2px;}
+  .subj-tabs{display:flex;gap:8px;margin-bottom:14px;}
+  .subj-tab{flex:1;padding:10px;border-radius:10px;border:1.5px solid #e0e0ee;background:#fff;font-size:12px;font-weight:700;cursor:pointer;text-align:center;transition:all .2s;font-family:'DM Sans',sans-serif;}
+  .subj-tab.active.phy{background:var(--phy);color:#fff;border-color:var(--phy);}
+  .subj-tab.active.chem{background:var(--chem);color:#fff;border-color:var(--chem);}
+  .subj-tab.active.math{background:var(--math);color:#fff;border-color:var(--math);}
+  .mock-pane{display:none;}
+  .mock-pane.active{display:block;}
+  .mock-top{background:#fff;border-radius:var(--radius);padding:12px 14px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow);}
+  .mock-chapter{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;}
+  .mock-chapter.phy{color:var(--phy);}
+  .mock-chapter.chem{color:var(--chem);}
+  .mock-chapter.math{color:var(--math);}
+  .mock-info{display:flex;gap:10px;align-items:center;}
+  .q-counter{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);}
+  .score-box{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--navy);}
+  .timer{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--must);background:#FDECEC;padding:4px 10px;border-radius:6px;}
+  .pyq-tag{display:inline-block;font-size:8px;font-weight:800;background:#FFF3CD;color:#856404;border-radius:4px;padding:2px 6px;margin-bottom:6px;}
+  .q-card{background:#fff;border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);margin-bottom:12px;}
+  .q-num{font-size:10px;font-weight:700;color:var(--text3);margin-bottom:6px;}
+  .q-text{font-size:13px;font-weight:600;color:var(--text);line-height:1.6;margin-bottom:12px;}
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .opt{padding:10px 12px;border:1.5px solid #e0e0ee;border-radius:8px;font-size:12px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px;background:#fafbff;}
+  .opt:hover{border-color:var(--navy);background:#f0f3ff;}
+  .opt.correct{background:#EAFAF1;border-color:var(--chem);color:var(--chem-dark);}
+  .opt.wrong{background:#FDECEC;border-color:var(--must);color:#c0392b;}
+  .opt-letter{font-weight:800;min-width:16px;}
+  .nav-btns{display:flex;gap:10px;margin-top:12px;}
+  .btn{padding:10px 18px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:none;transition:all .2s;font-family:'DM Sans',sans-serif;}
+  .btn-skip{background:#f0f0f8;color:var(--text2);}
+  .btn-next{background:var(--navy);color:var(--gold);margin-left:auto;}
+  .btn-submit{background:var(--must);color:#fff;}
+  .result-card{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--radius);padding:20px;color:#fff;text-align:center;}
+  .result-score{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:var(--gold);}
+  .result-label{font-size:12px;color:rgba(255,255,255,.6);margin-top:4px;}
+  .result-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:16px;}
+  .res-stat{background:rgba(255,255,255,.1);border-radius:8px;padding:10px;}
+  .res-stat .n{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--gold);}
+  .res-stat .l{font-size:9px;color:rgba(255,255,255,.6);margin-top:2px;}
+
+  /* ── TRACKER ── */
+  .tracker-header{background:linear-gradient(135deg,var(--chem-dark),var(--chem));border-radius:var(--radius);padding:14px;margin-bottom:14px;}
+  .tracker-header h2{font-family:'Syne',sans-serif;color:#fff;font-size:14px;font-weight:800;}
+  .tracker-header p{color:rgba(255,255,255,.75);font-size:10px;margin-top:4px;line-height:1.5;}
+  .progress-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
+  .prog-box{background:#fff;border-radius:10px;padding:10px;text-align:center;box-shadow:var(--shadow);}
+  .prog-num{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--navy);}
+  .prog-label{font-size:8.5px;color:var(--text3);margin-top:2px;font-weight:500;}
+  .tracker-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+  .tracker-block{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+  .tracker-block.full{grid-column:1/-1;}
+  .t-header{padding:10px 12px;font-family:'Syne',sans-serif;font-size:12px;font-weight:800;}
+  .t-header.phy{background:var(--phy);color:#fff;}
+  .t-header.chem{background:var(--chem);color:#fff;}
+  .t-header.math{background:var(--math);color:#fff;}
+  .t-header.overall{background:var(--gold);color:var(--navy);}
+  .t-progress{height:4px;background:rgba(255,255,255,.3);margin-bottom:0;}
+  .t-progress-bar{height:100%;width:0%;transition:width .5s;background:rgba(255,255,255,.8);}
+  .t-item{background:#fff;padding:9px 12px;border-bottom:1px solid #f0f0f8;display:flex;align-items:center;gap:10px;}
+  .t-item:last-child{border-bottom:none;}
+  .t-check{width:16px;height:16px;border-radius:4px;border:1.5px solid #d0d0e0;cursor:pointer;flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+  .t-check.done{background:var(--chem);border-color:var(--chem);color:#fff;font-size:10px;}
+  .t-text{font-size:10.5px;color:var(--text);flex:1;font-weight:500;}
+  .t-text.done{text-decoration:line-through;color:var(--text3);}
+  .t-min{background:#f0f0f8;border:1px solid #e0e0ee;border-radius:6px;padding:3px 7px;font-size:10px;font-family:'JetBrains Mono',monospace;cursor:pointer;color:var(--text2);font-weight:600;white-space:nowrap;}
+  .feeling-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .feeling-btn{padding:8px 12px;border-radius:20px;border:1.5px solid #e0e0ee;background:#fff;font-size:11px;cursor:pointer;transition:all .2s;font-weight:600;}
+  .feeling-btn.active{background:var(--navy);color:var(--gold);border-color:var(--navy);}
+  .notes-area{width:100%;border:1.5px solid #e0e0ee;border-radius:10px;padding:12px;font-size:12px;font-family:'DM Sans',sans-serif;color:var(--text);resize:none;background:#fff;margin-bottom:12px;}
+  .notes-area:focus{outline:none;border-color:var(--navy);}
+  .save-btn{width:100%;padding:14px;background:var(--navy);color:var(--gold);border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;}
+  .save-btn:hover{background:var(--gold);color:var(--navy);}
+  .how-today{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:var(--navy);margin-bottom:10px;}
+  .t-complete-pct{font-size:9px;font-weight:700;color:rgba(255,255,255,.7);text-align:right;padding:2px 10px 4px;}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════ HEADER ══════════════════════ -->
+<div class="header">
+  <div class="header-top">
+    <div class="ac-logo">AC</div>
+    <div class="header-title">
+      <h1>Anticlock Coaching Academy</h1>
+      <p>KCET 2026 · 27-DAY INTENSIVE PREPARATION PROGRAM</p>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-num" id="days-left">25</div>
+      <span class="stat-label">DAYS LEFT</span>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">45<sup style="font-size:11px">+</sup></div>
+      <span class="stat-label">TARGET SCORE</span>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">180</div>
+      <span class="stat-label">TOTAL MCQs</span>
+    </div>
+  </div>
+  <div class="exam-date">Apr 23<span>EXAM DATE</span></div>
+  <div class="day-banner">
+    🗓️ DAY 3 — Physics: Moving Charges &amp; Magnetism | Chemistry: d &amp; f Block | Maths: Continuity &amp; Differentiability
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('schedule')">📅 Schedule</button>
+    <button class="tab-btn" onclick="showTab('topics')">📚 Topics</button>
+    <button class="tab-btn" onclick="showTab('formulas')">🧮 Formulas</button>
+    <button class="tab-btn" onclick="showTab('mock')">✏️ Mock Test</button>
+    <button class="tab-btn" onclick="showTab('tracker')">📊 Tracker</button>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ══════════ SCHEDULE TAB ══════════ -->
+<div class="tab-pane active" id="tab-schedule">
+  <div class="day-mission">
+    <h2>🎯 Day 3 — Your Study Mission</h2>
+    <p>You have <strong style="color:var(--gold)">25 days</strong> to reach <strong style="color:var(--gold)">45+ marks</strong>. Today covers 3 high-weightage chapters — ~15 marks in KCET. Master Moving Charges numericals, d&f block colour &amp; magnetic properties, and Continuity theorems. No shortcuts today.</p>
+  </div>
+
+  <div class="subject-cards">
+    <div class="subj-card phy">
+      <div class="subj-label">PHYSICS</div>
+      <div class="subj-name">Moving Charges &amp; Magnetism</div>
+      <div class="marks-pill">~4 marks in KCET</div>
+      <div class="subj-time">3 hrs 30 min study
+        <span>+ 45 min mock + 30 min revision</span>
+      </div>
+    </div>
+    <div class="subj-card chem">
+      <div class="subj-label">CHEMISTRY</div>
+      <div class="subj-name">d and f Block Elements</div>
+      <div class="marks-pill">~4-5 marks in KCET</div>
+      <div class="subj-time">3 hrs study
+        <span>+ 30 min mock + 30 min revision</span>
+      </div>
+    </div>
+    <div class="subj-card math">
+      <div class="subj-label">MATHEMATICS</div>
+      <div class="subj-name">Continuity &amp; Differentiability</div>
+      <div class="marks-pill">~5-6 marks in KCET</div>
+      <div class="subj-time">4 hrs study
+        <span>+ 30 min mock + 30 min revision</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tbl-title">⏱️ Full Day Timetable</div>
+  <div class="timetable">
+    <div class="tbl-head">
+      <span>TIME</span><span>ACTIVITY</span><span>SUBJECT</span><span>DURATION</span><span>PRIORITY</span>
+    </div>
+
+    <div class="tbl-row"><div class="tbl-time">6:00 – 6:20</div><div class="tbl-act">Morning warm-up – read formula sheet aloud<small>Print or open Formula tab; revise all 3 chapters</small></div><div class="tbl-subj"><span class="subj-badge b-all">ALL 3</span></div><div class="tbl-dur">20 min</div><div class="tbl-pri"><span class="dot high"></span>High</div></div>
+
+    <div class="tbl-row"><div class="tbl-time">6:20 – 8:30</div><div class="tbl-act">Physics – Moving Charges (Part 1)<small>Biot-Savart Law → Ampere's Law → Force on conductor → Solenoid &amp; Toroid</small></div><div class="tbl-subj"><span class="subj-badge b-phy">PHYSICS</span></div><div class="tbl-dur">2 hrs 10 min</div><div class="tbl-pri"><span class="dot high"></span>High</div></div>
+
+    <div class="tbl-row break-row"><div class="tbl-time">8:30 – 8:50</div><div class="tbl-act">Break + Breakfast<small>Hydrate. No phone scrolling.</small></div><div class="tbl-subj"><span class="subj-badge b-break">BREAK</span></div><div class="tbl-dur">20 min</div><div class="tbl-pri">—</div></div>
+
+    <div class="tbl-row"><div class="tbl-time">8:50 – 10:10</div><div class="tbl-act">Physics – Moving Charges (Part 2)<small>Moving charge in field → Cyclotron → Galvanometer → Numericals (force, radius)</small></div><div class="tbl-subj"><span class="subj-badge b-phy">PHYSICS</span></div><div class="tbl-dur">1 hr 20 min</div><div class="tbl-pri"><span class="dot high"></span>High</div></div>
+
+    <div class="tbl-row"><div class="tbl-time">10:10 – 10:55</div><div class="tbl-act">Physics Mock Test – 30 MCQs (1 min each)<small>Use Mock Test tab → Physics section. Strict timer.</small></div><div class="tbl-subj"><span class="subj-badge b-mock">MOCK</span></div><div class="tbl-dur">45 min</div><div class="tbl-pri"><span class="dot high"></span>Must Do</div></div>
+
+    <div class="tbl-row break-row"><div class="tbl-time">10:55 – 11:25</div><div class="tbl-act">Lunch Break<small>Proper meal. Short walk if possible.</small></div><div class="tbl-subj"><span class="subj-badge b-break">BREAK</span></div><div class="tbl-dur">30 min</div><div class="tbl-pri">—</div></div>
+
+    <div class="tbl-row"><div class="tbl-time">11:25 – 11:55</div><div class="tbl-act">Physics Revision + Mock Analysis<small>Go through wrong answers. Re-read key formulas.</small></div><div class="tbl-subj"><span class="subj-badge b-rev">REVISION</span></div><div class="tbl-dur">30 min</div><div class="tbl-pri"><span class="dot high"></span>High</div></div>
+
+    <div class="tbl-row"><div class="tbl-time">11:55 – 1:55</div><div class="tbl-act">Chemistry – d &amp; f Block (Part 1)<small>Electronic config → General characteristics → Variable oxidation states → Colour &amp; magnetic properties</small></div><div class="tbl-subj"><span class="subj-badge b-chem">CHEMISTRY</span></div><div class="tbl-dur">2 hrs</div><div class="tbl-pri"><span class="dot high"></span>High</div></div>
+
+    <div class="tbl-row break-row"><div class="tbl-time">1:55 – 2:15</div><div class="tbl-act">Short Break<small>Snack + fresh air.</small></div><div class="tbl-subj"><span class="subj-badge b-break">BREAK</span></div><div class="tbl-dur">20 min</div><div class="tbl-pri">—</div></div>
+
+    <div class="tbl-row"><div class="tbl-time">2:15 – 3:15</div><div class="tbl-act">Chemistry – d &amp; f Block (Part 2)<small>Lanthanides &amp; actinides → KMnO₄ &amp; K₂Cr₂O₇ preparation, properties, uses</small></div><div class="tbl-subj"><span class="subj-badge b-chem">CHEMISTRY</span></div><div class="tbl-dur">1 hr</div><div class="tbl-pri"><span class="dot high"></span>High</div></div>
+
+    <div class="tbl-row"><div class="tbl-time">3:15 – 3:45</div><div class="tbl-act">Chemistry Mock Test – 30 MCQs<small>Use Mock Test tab → Chemistry section. Strict timer.</small></div><div class="tbl-subj"><span class="subj-badge b-mock">MOCK</span></div><div class="tbl-dur">30 min</div><div class="tbl-pri"><span class="dot high"></span>Must Do</div></div>
+
+    <div class="tbl-row"><div class="tbl-time">3:45 – 4:15</div><div class="tbl-act">Chemistry Revision + Mock Analysis<small>Focus on KMnO₄ reactions &amp; lanthanide contraction.</small></div><div class="tbl-subj"><span class="subj-badge b-rev">REVISION</span></div><div class="tbl-dur">30 min</div><div class="tbl-pri"><span class="dot med"></span>Medium</div></div>
+
+    <div class="tbl-row break-row"><div class="tbl-time">4:15 – 4:30</div><div class="tbl-act">Short Break<small>Walk outside. 15 min.</small></div><div class="tbl-subj"><span class="subj-badge b-break">BREAK</span></div><div class="tbl-dur">15 min</div><div class="tbl-pri">—</div></div>
+
+    <div class="tbl-row"><div class="tbl-time">4:30 – 6:30</div><div class="tbl-act">Maths – Continuity &amp; Differentiability (Part 1 &amp; 2)<small>Continuity at point → Differentiability → Chain rule → Implicit → Logarithmic differentiation</small></div><div class="tbl-subj"><span class="subj-badge b-math">MATHS</span></div><div class="tbl-dur">2 hrs</div><div class="tbl-pri"><span class="dot high"></span>High</div></div>
+
+    <div class="tbl-row"><div class="tbl-time">6:30 – 8:00</div><div class="tbl-act">Maths – Continuity &amp; Differentiability (Part 3)<small>Parametric, second order derivatives, Rolle's &amp; LMVT theorems + 10 numericals</small></div><div class="tbl-subj"><span class="subj-badge b-math">MATHS</span></div><div class="tbl-dur">1 hr 30 min</div><div class="tbl-pri"><span class="dot high"></span>High</div></div>
+
+    <div class="tbl-row break-row"><div class="tbl-time">8:00 – 8:30</div><div class="tbl-act">Dinner Break<small>Proper meal. No study for 30 min.</small></div><div class="tbl-subj"><span class="subj-badge b-break">BREAK</span></div><div class="tbl-dur">30 min</div><div class="tbl-pri">—</div></div>
+
+    <div class="tbl-row"><div class="tbl-time">8:30 – 9:00</div><div class="tbl-act">Maths Mock Test – 30 MCQs<small>Use Mock Test tab → Maths section. Strict timer.</small></div><div class="tbl-subj"><span class="subj-badge b-mock">MOCK</span></div><div class="tbl-dur">30 min</div><div class="tbl-pri"><span class="dot high"></span>Must Do</div></div>
+
+    <div class="tbl-row"><div class="tbl-time">9:00 – 9:30</div><div class="tbl-act">Maths Revision + Mock Analysis<small>Re-solve wrong questions. Note mistake patterns.</small></div><div class="tbl-subj"><span class="subj-badge b-rev">REVISION</span></div><div class="tbl-dur">30 min</div><div class="tbl-pri"><span class="dot med"></span>Medium</div></div>
+
+    <div class="tbl-row"><div class="tbl-time">9:30 – 10:00</div><div class="tbl-act">Night Revision – All 3 Chapters (Speed run)<small>Formula sheet → Top 5 concepts per subject → Fill tracker</small></div><div class="tbl-subj"><span class="subj-badge b-all">ALL 3</span></div><div class="tbl-dur">30 min</div><div class="tbl-pri"><span class="dot high"></span>High</div></div>
+
+    <div class="tbl-footer">
+      <div class="footer-stat"><span>📖</span><div><b>Total Study Time:</b> <p style="color:var(--gold);font-weight:700;display:inline">8 hrs 30 min</p></div></div>
+      <div class="footer-stat"><span>✏️</span><div><b>Mock Tests:</b> <p style="color:var(--gold);font-weight:700;display:inline">90 MCQs across 3 subjects</p></div></div>
+      <div class="footer-stat"><span>🔁</span><div><b>Revision:</b> <p style="color:var(--gold);font-weight:700;display:inline">1 hr 30 min</p></div></div>
+      <div class="footer-stat"><span>☕</span><div><b>Total Breaks:</b> <p style="color:var(--gold);font-weight:700;display:inline">1 hr 55 min</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TOPICS TAB ══════════ -->
+<div class="tab-pane" id="tab-topics">
+  <div class="section-title">📚 Chapter-wise Topics for Today</div>
+  <div class="topics-grid">
+    <!-- Physics -->
+    <div class="topic-col">
+      <div class="topic-header phy">⚡ Physics – Moving Charges &amp; Magnetism (~4 marks)</div>
+      <div class="topic-item"><span class="tag must">MUST</span><div><div class="topic-name">Biot-Savart Law &amp; Applications</div><div class="topic-desc">B at centre of circular loop. Direct numerical every year.</div></div></div>
+      <div class="topic-item"><span class="tag must">MUST</span><div><div class="topic-name">Ampere's Circuital Law</div><div class="topic-desc">B inside solenoid = μ₀nI. Toroid formula.</div></div></div>
+      <div class="topic-item"><span class="tag must">MUST</span><div><div class="topic-name">Force on Moving Charge in B field</div><div class="topic-desc">F = qvB sinθ. Radius r = mv/qB. Most repeated formula.</div></div></div>
+      <div class="topic-item"><span class="tag must">MUST</span><div><div class="topic-name">Force on Current-carrying Conductor</div><div class="topic-desc">F = BIL sinθ. Force between parallel wires.</div></div></div>
+      <div class="topic-item"><span class="tag imp">IMP</span><div><div class="topic-name">Cyclotron – Principle &amp; Frequency</div><div class="topic-desc">Cyclotron frequency = qB/2πm; independent of velocity.</div></div></div>
+      <div class="topic-item"><span class="tag imp">IMP</span><div><div class="topic-name">Moving Coil Galvanometer</div><div class="topic-desc">Deflection ∝ current. Current sensitivity = NAB/k.</div></div></div>
+      <div class="topic-item"><span class="tag imp">IMP</span><div><div class="topic-name">Torque on Current Loop</div><div class="topic-desc">τ = NBIA sinθ. Magnetic dipole moment m = NIA.</div></div></div>
+      <div class="topic-item"><span class="tag med">MED</span><div><div class="topic-name">Long Straight Wire Field</div><div class="topic-desc">B = μ₀I/2πr. Know direction via right-hand rule.</div></div></div>
+    </div>
+    <!-- Chemistry -->
+    <div class="topic-col">
+      <div class="topic-header chem">🧪 Chemistry – d &amp; f Block Elements (~4-5 marks)</div>
+      <div class="topic-item"><span class="tag must">MUST</span><div><div class="topic-name">Electronic Configuration of d-block</div><div class="topic-desc">Exceptions: Cr [Ar]3d⁵4s¹ and Cu [Ar]3d¹⁰4s¹. 1-2 MCQs.</div></div></div>
+      <div class="topic-item"><span class="tag must">MUST</span><div><div class="topic-name">Variable Oxidation States</div><div class="topic-desc">Mn: +2 to +7. Reason: (n-1)d and ns electrons available.</div></div></div>
+      <div class="topic-item"><span class="tag must">MUST</span><div><div class="topic-name">Magnetic Properties</div><div class="topic-desc">μ = √n(n+2) BM. Count unpaired electrons. Paramagnetism.</div></div></div>
+      <div class="topic-item"><span class="tag must">MUST</span><div><div class="topic-name">KMnO₄ – Preparation, Properties, Uses</div><div class="topic-desc">MnO₄⁻ is strong oxidising agent. Reactions in acidic/basic/neutral media.</div></div></div>
+      <div class="topic-item"><span class="tag must">MUST</span><div><div class="topic-name">K₂Cr₂O₇ – Preparation &amp; Uses</div><div class="topic-desc">Dichromate in acidic medium: Cr₂O₇²⁻ + 14H⁺ + 6e⁻ → 2Cr³⁺</div></div></div>
+      <div class="topic-item"><span class="tag imp">IMP</span><div><div class="topic-name">Lanthanoid Contraction – Cause &amp; Effects</div><div class="topic-desc">Imperfect shielding by 4f electrons → atomic radii decrease.</div></div></div>
+      <div class="topic-item"><span class="tag imp">IMP</span><div><div class="topic-name">Colour in d-block Compounds</div><div class="topic-desc">d-d transition. Zn²⁺, Cu⁺, Sc³⁺ are colourless (no unpaired e⁻).</div></div></div>
+      <div class="topic-item"><span class="tag med">MED</span><div><div class="topic-name">Actinoids vs Lanthanoids Comparison</div><div class="topic-desc">Irregular oxidation states in actinoids. 5f vs 4f shielding.</div></div></div>
+    </div>
+    <!-- Maths full width -->
+    <div class="topic-col full">
+      <div class="topic-header math">📐 Maths – Continuity &amp; Differentiability (~5-6 marks)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;">
+        <div>
+          <div class="topic-item"><span class="tag must">MUST</span><div><div class="topic-name">Continuity at a Point</div><div class="topic-desc">LHL = RHL = f(a). Finding k for continuity. Direct MCQ.</div></div></div>
+          <div class="topic-item"><span class="tag must">MUST</span><div><div class="topic-name">Differentiability &amp; Relation to Continuity</div><div class="topic-desc">Every differentiable function is continuous. Converse false.</div></div></div>
+          <div class="topic-item"><span class="tag must">MUST</span><div><div class="topic-name">Chain Rule (Composite Functions)</div><div class="topic-desc">d/dx[f(g(x))] = f'(g(x))·g'(x). Most questions use this.</div></div></div>
+          <div class="topic-item"><span class="tag must">MUST</span><div><div class="topic-name">Logarithmic Differentiation</div><div class="topic-desc">y = xˢⁱⁿˣ or xˣ type. Take log both sides before diff.</div></div></div>
+        </div>
+        <div>
+          <div class="topic-item"><span class="tag must">MUST</span><div><div class="topic-name">Implicit Differentiation</div><div class="topic-desc">Differentiate both sides w.r.t. x; group dy/dx terms.</div></div></div>
+          <div class="topic-item"><span class="tag imp">IMP</span><div><div class="topic-name">Parametric Differentiation</div><div class="topic-desc">dy/dx = (dy/dt)/(dx/dt). Common with x=acosθ, y=asinθ.</div></div></div>
+          <div class="topic-item"><span class="tag imp">IMP</span><div><div class="topic-name">Second Order Derivatives d²y/dx²</div><div class="topic-desc">Differentiate dy/dx again. Used in Rolle's theorem problems.</div></div></div>
+          <div class="topic-item"><span class="tag imp">IMP</span><div><div class="topic-name">Rolle's Theorem &amp; LMVT</div><div class="topic-desc">Rolle's: f(a)=f(b) → f'(c)=0. LMVT: f'(c) = [f(b)-f(a)]/(b-a).</div></div></div>
+        </div>
+      </div>
+    </div>
+    <!-- Cheat codes full width -->
+    <div class="topic-col full">
+      <div class="topic-header cheat">💡 KCET Cheat Codes &amp; Exam Strategy – Day 3</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;">
+        <div>
+          <div class="cheat-item"><span class="cheat-label cl-phy">PHY</span><div class="cheat-text"><b>Right-Hand Thumb Rule:</b> Thumb → current direction; fingers curl in direction of B field around the wire.</div></div>
+          <div class="cheat-item"><span class="cheat-label cl-phy">PHY</span><div class="cheat-text"><b>Cyclotron radius:</b> r = mv/qB. Doubling speed → doubles radius. Doubling mass → doubles radius.</div></div>
+          <div class="cheat-item"><span class="cheat-label cl-phy">PHY</span><div class="cheat-text"><b>Parallel wires trick:</b> Same direction currents attract; opposite direction currents repel.</div></div>
+        </div>
+        <div>
+          <div class="cheat-item"><span class="cheat-label cl-chem">CHEM</span><div class="cheat-text"><b>Cr &amp; Cu exception:</b> Half-filled (Cr) and fully-filled (Cu) d-orbitals are extra stable → 4s gets only 1e⁻.</div></div>
+          <div class="cheat-item"><span class="cheat-label cl-chem">CHEM</span><div class="cheat-text"><b>Colour quick check:</b> d⁰ (Sc³⁺, Ti⁴⁺) and d¹⁰ (Zn²⁺, Cu⁺) are colourless. All others coloured.</div></div>
+          <div class="cheat-item"><span class="cheat-label cl-chem">CHEM</span><div class="cheat-text"><b>KMnO₄ colour change:</b> Acidic → Mn⁷⁺(purple) reduces to Mn²⁺(colourless/pale pink). Easy identification MCQ.</div></div>
+        </div>
+        <div>
+          <div class="cheat-item"><span class="cheat-label cl-math">MATH</span><div class="cheat-text"><b>Continuity trick:</b> If function has piecewise definition, always check at the breaking point. Substitute from both sides.</div></div>
+          <div class="cheat-item"><span class="cheat-label cl-math">MATH</span><div class="cheat-text"><b>Log diff shortcut:</b> For y = [f(x)]^g(x), take ln, differentiate: (1/y)(dy/dx) = g'lnf + g·f'/f.</div></div>
+          <div class="cheat-item"><span class="cheat-label cl-math">MATH</span><div class="cheat-text"><b>|x| not differentiable at x=0:</b> LHD = -1, RHD = +1. Not equal → not differentiable. Common trap question.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ FORMULAS TAB ══════════ -->
+<div class="tab-pane" id="tab-formulas">
+  <div class="section-title">🧮 Formula Sheet – Day 3 Chapters</div>
+
+  <!-- Physics -->
+  <div class="formula-section">
+    <div class="formula-header phy">⚡ Moving Charges &amp; Magnetism – Physics</div>
+    <div class="formula-grid">
+      <div class="formula-item"><div class="f-label">BIOT-SAVART LAW</div><div class="f-expr">dB = μ₀/4π · (I dl × r̂)/r²</div><div class="f-note">μ₀ = 4π × 10⁻⁷ T·m/A</div></div>
+      <div class="formula-item"><div class="f-label">FIELD AT CENTRE OF CIRCULAR LOOP</div><div class="f-expr">B = μ₀I / 2R</div><div class="f-note">R = radius of loop; for N turns: B = μ₀NI/2R</div></div>
+      <div class="formula-item"><div class="f-label">LONG STRAIGHT WIRE</div><div class="f-expr">B = μ₀I / 2πr</div><div class="f-note">r = perpendicular distance from wire</div></div>
+      <div class="formula-item"><div class="f-label">SOLENOID (AMPERE'S LAW)</div><div class="f-expr">B = μ₀nI</div><div class="f-note">n = turns per unit length = N/L</div></div>
+      <div class="formula-item"><div class="f-label">FORCE ON MOVING CHARGE</div><div class="f-expr">F = q(v × B) = qvB sinθ</div><div class="f-note">Circular motion if v ⊥ B</div></div>
+      <div class="formula-item"><div class="f-label">RADIUS OF CIRCULAR PATH</div><div class="f-expr">r = mv / qB</div><div class="f-note">Time period T = 2πm/qB (independent of v)</div></div>
+      <div class="formula-item"><div class="f-label">CYCLOTRON FREQUENCY</div><div class="f-expr">ν = qB / 2πm</div><div class="f-note">Independent of velocity and radius</div></div>
+      <div class="formula-item"><div class="f-label">FORCE ON CURRENT CONDUCTOR</div><div class="f-expr">F = BIL sinθ</div><div class="f-note">θ = angle between I and B</div></div>
+      <div class="formula-item"><div class="f-label">FORCE PER UNIT LENGTH (PARALLEL WIRES)</div><div class="f-expr">F/L = μ₀I₁I₂ / 2πd</div><div class="f-note">Attractive if currents in same direction</div></div>
+      <div class="formula-item"><div class="f-label">TORQUE ON CURRENT LOOP</div><div class="f-expr">τ = NBIA sinθ | τ = m × B</div><div class="f-note">m = NIA = magnetic dipole moment</div></div>
+      <div class="formula-item"><div class="f-label">GALVANOMETER SENSITIVITY</div><div class="f-expr">I/θ = k/NAB</div><div class="f-note">Current sensitivity = NAB/k; voltage sensitivity = NAB/kR</div></div>
+      <div class="formula-item"><div class="f-label">INTERNAL RESISTANCE (POTENTIOMETER)</div><div class="f-expr">r = R(l₁ - l₂)/l₂</div><div class="f-note">l₁ = without shunt; l₂ = with shunt R</div></div>
+    </div>
+  </div>
+
+  <!-- Chemistry -->
+  <div class="formula-section">
+    <div class="formula-header chem">🧪 d &amp; f Block Elements – Chemistry</div>
+    <div class="formula-grid">
+      <div class="formula-item"><div class="f-label">MAGNETIC MOMENT</div><div class="f-expr">μ = √[n(n+2)] BM</div><div class="f-note">n = number of unpaired electrons</div></div>
+      <div class="formula-item"><div class="f-label">DICHROMATE HALF-REACTION (ACIDIC)</div><div class="f-expr">Cr₂O₇²⁻ + 14H⁺ + 6e⁻ → 2Cr³⁺ + 7H₂O</div><div class="f-note">Strong oxidising agent in acidic medium</div></div>
+      <div class="formula-item"><div class="f-label">PERMANGANATE (ACIDIC MEDIUM)</div><div class="f-expr">MnO₄⁻ + 8H⁺ + 5e⁻ → Mn²⁺ + 4H₂O</div><div class="f-note">Purple → colourless/pale pink</div></div>
+      <div class="formula-item"><div class="f-label">PERMANGANATE (BASIC MEDIUM)</div><div class="f-expr">MnO₄⁻ + e⁻ → MnO₄²⁻</div><div class="f-note">Purple → green (manganate)</div></div>
+      <div class="formula-item"><div class="f-label">Cr ELECTRONIC CONFIGURATION</div><div class="f-expr">[Ar] 3d⁵ 4s¹</div><div class="f-note">NOT 3d⁴4s². Half-filled 3d⁵ extra stable</div></div>
+      <div class="formula-item"><div class="f-label">Cu ELECTRONIC CONFIGURATION</div><div class="f-expr">[Ar] 3d¹⁰ 4s¹</div><div class="f-note">NOT 3d⁹4s². Fully filled 3d¹⁰ extra stable</div></div>
+      <div class="formula-item"><div class="f-label">LANTHANOIDS</div><div class="f-expr">Ce (Z=58) to Lu (Z=71) | 4f¹⁻¹⁴</div><div class="f-note">Lanthanoid contraction: imperfect shielding by 4f</div></div>
+      <div class="formula-item"><div class="f-label">ACTINOIDS</div><div class="f-expr">Th (Z=90) to Lr (Z=103) | 5f¹⁻¹⁴</div><div class="f-note">All radioactive; wider range of oxidation states vs lanthanoids</div></div>
+    </div>
+  </div>
+
+  <!-- Maths -->
+  <div class="formula-section">
+    <div class="formula-header math">📐 Continuity &amp; Differentiability – Mathematics</div>
+    <div class="formula-grid">
+      <div class="formula-item"><div class="f-label">CONTINUITY AT POINT a</div><div class="f-expr">lim[x→a⁻]f(x) = lim[x→a⁺]f(x) = f(a)</div><div class="f-note">LHL = RHL = f(a) must all be equal</div></div>
+      <div class="formula-item"><div class="f-label">DIFFERENTIABILITY (LHD = RHD)</div><div class="f-expr">f'(a) = lim[h→0] [f(a+h)-f(a)]/h</div><div class="f-note">Differentiable → continuous; not vice versa</div></div>
+      <div class="formula-item"><div class="f-label">CHAIN RULE</div><div class="f-expr">d/dx[f(g(x))] = f'(g(x))·g'(x)</div><div class="f-note">Apply from outside in</div></div>
+      <div class="formula-item"><div class="f-label">LOGARITHMIC DIFFERENTIATION</div><div class="f-expr">y = f(x)^g(x) → ln y = g ln f → diff both sides</div><div class="f-note">Use for variable base and exponent</div></div>
+      <div class="formula-item"><div class="f-label">IMPLICIT DIFFERENTIATION</div><div class="f-expr">F(x,y) = 0 → dy/dx = -∂F/∂x ÷ ∂F/∂y</div><div class="f-note">Or differentiate term by term w.r.t. x</div></div>
+      <div class="formula-item"><div class="f-label">PARAMETRIC FORM</div><div class="f-expr">dy/dx = (dy/dt) / (dx/dt)</div><div class="f-note">d²y/dx² = (d/dt[dy/dx]) / (dx/dt)</div></div>
+      <div class="formula-item"><div class="f-label">ROLLE'S THEOREM</div><div class="f-expr">f continuous on [a,b], f(a)=f(b) → ∃c: f'(c)=0</div><div class="f-note">c lies strictly between a and b</div></div>
+      <div class="formula-item"><div class="f-label">LMVT (MEAN VALUE THEOREM)</div><div class="f-expr">f'(c) = [f(b) - f(a)] / (b - a)</div><div class="f-note">Geometrically: tangent || secant at c</div></div>
+      <div class="formula-item"><div class="f-label">d/dx (sin⁻¹x)</div><div class="f-expr">1 / √(1-x²)</div><div class="f-note">Domain: (-1,1)</div></div>
+      <div class="formula-item"><div class="f-label">d/dx (cos⁻¹x)</div><div class="f-expr">-1 / √(1-x²)</div><div class="f-note">Note the negative sign!</div></div>
+      <div class="formula-item"><div class="f-label">d/dx (tan⁻¹x)</div><div class="f-expr">1 / (1+x²)</div><div class="f-note">Domain: all real numbers</div></div>
+      <div class="formula-item"><div class="f-label">d/dx (xⁿ) | d/dx (eˣ) | d/dx (ln x)</div><div class="f-expr">nxⁿ⁻¹ | eˣ | 1/x</div><div class="f-note">Memorise these; they appear in every question</div></div>
+    </div>
+  </div>
+
+  <!-- Quick Cheat Codes -->
+  <div style="background:#FFF8E8;border:2px solid var(--gold);border-radius:var(--radius);padding:14px;margin-bottom:16px;">
+    <div style="font-family:'Syne',sans-serif;font-weight:800;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:6px;">🎯 Quick Cheat Codes — Chapter Endings (Score 45+)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--phy);margin-bottom:6px;">⚡ Physics Tricks</div>
+        <div style="font-size:10px;color:var(--text);line-height:1.6;"><b>Helix motion:</b> When v has component || B → helical path; pitch = v‖ × T.<br/><br/><b>Velocity selector:</b> qE = qvB → v = E/B. No deflection.<br/><br/><b>Ammeter vs Voltmeter:</b> Ammeter = low resistance (shunt in parallel). Voltmeter = high resistance (multiplier in series).</div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--chem);margin-bottom:6px;">🧪 Chemistry Tricks</div>
+        <div style="font-size:10px;color:var(--text);line-height:1.6;"><b>Mn oxidation states:</b> +2 (most stable in solution), +4 (MnO₂), +7 (KMnO₄).<br/><br/><b>Highest oxidation state:</b> Equal to group number. Os, Ru can show +8.<br/><br/><b>Lanthanoid ions coloured:</b> Due to f-f transition (not d-d like transition metals).</div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--math);margin-bottom:6px;">📐 Maths Tricks</div>
+        <div style="font-size:10px;color:var(--text);line-height:1.6;"><b>Even/odd check:</b> f(-x)=f(x) → even; f(-x)=-f(x) → odd. Helps simplify diff.<br/><br/><b>LMVT existence:</b> Need f continuous on [a,b] AND differentiable on (a,b).<br/><br/><b>y = xˣ derivative:</b> Use log diff → dy/dx = xˣ(1 + ln x). Classic KCET question.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MOCK TEST TAB ══════════ -->
+<div class="tab-pane" id="tab-mock">
+  <div class="mock-header">
+    <div>
+      <h2>Live Mock Test – Day 3</h2>
+      <p>30 MCQs per subject. Each question must be answered within <strong>1 minute</strong>. PYQ questions are tagged — treat them as gold.</p>
+    </div>
+    <div class="mock-total">
+      <div class="num">90</div>
+      <div class="lbl">TOTAL MCQs TODAY</div>
+    </div>
+  </div>
+
+  <div class="subj-tabs">
+    <div class="subj-tab active phy" onclick="switchMock('phy')">⚡ Physics<br/><small>30 questions</small></div>
+    <div class="subj-tab chem" onclick="switchMock('chem')">🧪 Chemistry<br/><small>30 questions</small></div>
+    <div class="subj-tab math" onclick="switchMock('math')">📐 Maths<br/><small>30 questions</small></div>
+  </div>
+
+  <!-- Physics Mock -->
+  <div class="mock-pane active" id="mock-phy">
+    <div class="mock-top">
+      <div class="mock-chapter phy">⚡ Physics – Moving Charges &amp; Magnetism</div>
+      <div class="mock-info">
+        <div class="q-counter" id="phy-qc">Q 1/30</div>
+        <div class="score-box">Score: <span id="phy-score">0</span>/30</div>
+        <div class="timer" id="phy-timer">1:00</div>
+      </div>
+    </div>
+    <div id="phy-q-area"></div>
+    <div id="phy-result" style="display:none"></div>
+  </div>
+
+  <!-- Chemistry Mock -->
+  <div class="mock-pane" id="mock-chem">
+    <div class="mock-top">
+      <div class="mock-chapter chem">🧪 Chemistry – d &amp; f Block Elements</div>
+      <div class="mock-info">
+        <div class="q-counter" id="chem-qc">Q 1/30</div>
+        <div class="score-box">Score: <span id="chem-score">0</span>/30</div>
+        <div class="timer" id="chem-timer">1:00</div>
+      </div>
+    </div>
+    <div id="chem-q-area"></div>
+    <div id="chem-result" style="display:none"></div>
+  </div>
+
+  <!-- Maths Mock -->
+  <div class="mock-pane" id="mock-math">
+    <div class="mock-top">
+      <div class="mock-chapter math">📐 Maths – Continuity &amp; Differentiability</div>
+      <div class="mock-info">
+        <div class="q-counter" id="math-qc">Q 1/30</div>
+        <div class="score-box">Score: <span id="math-score">0</span>/30</div>
+        <div class="timer" id="math-timer">1:00</div>
+      </div>
+    </div>
+    <div id="math-q-area"></div>
+    <div id="math-result" style="display:none"></div>
+  </div>
+</div>
+
+<!-- ══════════ TRACKER TAB ══════════ -->
+<div class="tab-pane" id="tab-tracker">
+  <div class="tracker-header">
+    <h2>📊 Day 3 Progress Tracker</h2>
+    <p>Track every task you complete today. Mark items as done. Enter hours spent. Save your progress and review your daily consistency score.</p>
+  </div>
+  <div class="progress-row">
+    <div class="prog-box"><div class="prog-num" id="t-done">0</div><div class="prog-label">TASKS DONE</div></div>
+    <div class="prog-box"><div class="prog-num" id="t-total">0</div><div class="prog-label">TOTAL TASKS</div></div>
+    <div class="prog-box"><div class="prog-num" id="t-pct">0%</div><div class="prog-label">TODAY'S PROGRESS</div></div>
+    <div class="prog-box"><div class="prog-num" id="t-hrs">0h</div><div class="prog-label">HOURS LOGGED</div></div>
+  </div>
+
+  <div class="tracker-cols">
+    <div class="tracker-block" id="tb-phy">
+      <div class="t-header phy">⚡ Physics – Moving Charges &amp; Magnetism</div>
+      <div class="t-progress"><div class="t-progress-bar" id="pb-phy"></div></div>
+      <div class="t-complete-pct" id="pct-phy">0% complete</div>
+      <div id="tasks-phy"></div>
+    </div>
+    <div class="tracker-block" id="tb-chem">
+      <div class="t-header chem">🧪 Chemistry – d &amp; f Block Elements</div>
+      <div class="t-progress"><div class="t-progress-bar" id="pb-chem"></div></div>
+      <div class="t-complete-pct" id="pct-chem">0% complete</div>
+      <div id="tasks-chem"></div>
+    </div>
+    <div class="tracker-block" id="tb-math">
+      <div class="t-header math">📐 Maths – Continuity &amp; Differentiability</div>
+      <div class="t-progress"><div class="t-progress-bar" id="pb-math"></div></div>
+      <div class="t-complete-pct" id="pct-math">0% complete</div>
+      <div id="tasks-math"></div>
+    </div>
+    <div class="tracker-block">
+      <div class="t-header overall">⭐ Overall Day 3 Commitments</div>
+      <div class="t-progress"><div class="t-progress-bar" id="pb-overall"></div></div>
+      <div class="t-complete-pct" id="pct-overall">0% overall</div>
+      <div id="tasks-overall"></div>
+    </div>
+  </div>
+
+  <div class="how-today">How did today go?</div>
+  <div class="feeling-row" id="feeling-row">
+    <button class="feeling-btn" onclick="setFeeling(this)">😊 Great day!</button>
+    <button class="feeling-btn" onclick="setFeeling(this)">😐 Okay, could be better</button>
+    <button class="feeling-btn" onclick="setFeeling(this)">😤 Struggled today</button>
+    <button class="feeling-btn" onclick="setFeeling(this)">🔥 On fire – did extra!</button>
+    <button class="feeling-btn" onclick="setFeeling(this)">😵 Distracted, need to refocus</button>
+  </div>
+  <textarea class="notes-area" id="notes-area" rows="4" placeholder="Note down: What did you struggle with today? What clicked well? Any doubts to clear tomorrow? Be honest — this is for your own growth."></textarea>
+  <button class="save-btn" onclick="saveProgress()">💾 Save Today's Progress</button>
+</div>
+
+</div><!-- /content -->
+
+<script>
+// ── Tab Switching ─────────────────────────────────────────────────────────────
+function showTab(id){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── Days Left Counter ─────────────────────────────────────────────────────────
+(function(){
+  const exam=new Date('2026-04-23');
+  const today=new Date();
+  const diff=Math.ceil((exam-today)/(1000*60*60*24));
+  document.getElementById('days-left').textContent=diff>0?diff:0;
+})();
+
+// ── Mock Test Data ────────────────────────────────────────────────────────────
+const PHY_Q=[
+  {pyq:'KCET 2022',q:'A charged particle moves in a magnetic field in a circle of radius r. If the speed of the particle is doubled and charge is halved, the new radius will be',opts:['r','2r','4r','r/2'],ans:2},
+  {pyq:'KCET 2021',q:'The unit of magnetic moment is',opts:['A·m²','T·m','Wb·m','A/m'],ans:0},
+  {pyq:'KCET 2020',q:'The magnetic field at the centre of a circular loop of radius R carrying current I is',opts:['μ₀I/4R','μ₀I/2R','μ₀I/R','2μ₀I/R'],ans:1},
+  {pyq:'KCET 2019',q:'Kirchhoff\'s junction rule is a reflection of',opts:['Conservation of momentum','Conservation of current density','Conservation of charge','Conservation of energy'],ans:2},
+  {pyq:'KCET 2023',q:'In a cyclotron, the time period of revolution of a charged particle is',opts:['Dependent on speed','Dependent on radius','Dependent on both speed and radius','Independent of both speed and radius'],ans:3},
+  {pyq:'KCET 2022',q:'Two parallel wires carrying currents 5A and 10A in the same direction are separated by 0.5 m. Force per unit length between them is',opts:['2×10⁻⁵ N/m','4×10⁻⁵ N/m','2×10⁻⁶ N/m','4×10⁻⁶ N/m'],ans:0},
+  {pyq:'KCET 2021',q:'A proton moving with velocity v enters a magnetic field B perpendicular to it. The radius of circular path is r. If an alpha particle moves with same velocity in same field, its radius is',opts:['r/2','r','2r','4r'],ans:2},
+  {pyq:'KCET 2020',q:'The sensitivity of a moving coil galvanometer can be increased by',opts:['Increasing the number of turns of the coil','Increasing the area of the coil','Using a strong magnetic field','All of the above'],ans:3},
+  {pyq:'KCET 2019',q:'Force on a current-carrying conductor in a magnetic field is maximum when angle between conductor and field is',opts:['0°','30°','60°','90°'],ans:3},
+  {pyq:'KCET 2024',q:'If a charged particle enters perpendicular to a magnetic field, it undergoes circular motion. The period T is',opts:['2πm/qB','2πq/mB','πm/qB','πq/mB'],ans:0},
+  {pyq:'KCET 2023',q:'Toroid differs from solenoid in that',opts:['Toroid has no poles','Field inside toroid is zero','Toroid is a closed solenoid','Both A and C'],ans:3},
+  {pyq:'KCET 2022',q:'When a galvanometer is converted to ammeter, a resistance is',opts:['Connected in series with high value','Connected in parallel with low value','Connected in series with low value','Connected in parallel with high value'],ans:1},
+  {pyq:'KCET 2021',q:'An electron and a proton move with same momentum in the same magnetic field. The ratio of their radii is',opts:['1:1','mp:me','me:mp','√(me:mp)'],ans:0},
+  {pyq:'KCET 2020',q:'Magnetic field inside an ideal solenoid having n turns per metre carrying current I is',opts:['μ₀nI','μ₀nI/2','2μ₀nI','μ₀nI/4'],ans:0},
+  {pyq:'KCET 2019',q:'A current loop in a magnetic field experiences',opts:['A force only','A torque only','Both force and torque','Neither force nor torque'],ans:1},
+  {pyq:'KCET 2024',q:'The device used to accelerate charged particles to high energy using magnetic field is',opts:['Transformer','Cyclotron','Galvanometer','Solenoid'],ans:1},
+  {pyq:'KCET 2023',q:'A velocity selector uses crossed electric and magnetic fields. If particle passes undeflected, its velocity is',opts:['E×B','E/B','B/E','E+B'],ans:1},
+  {pyq:'KCET 2022',q:'A long straight wire carries current 10A. Magnetic field at 2cm from wire is',opts:['1×10⁻⁴ T','2×10⁻⁴ T','1×10⁻⁵ T','1×10⁻³ T'],ans:0},
+  {pyq:'KCET 2021',q:'The correct expression for the torque on a magnetic dipole in a uniform magnetic field is',opts:['τ = m+B','τ = m×B','τ = m/B','τ = m·B'],ans:1},
+  {pyq:'KCET 2020',q:'If a charged particle moves in a helical path in a magnetic field, then',opts:['Only v‖ changes','Only v⊥ changes','Both change','Neither changes'],ans:3},
+  {pyq:'KCET 2024',q:'The strength of magnetic field at centre of a circular arc of radius R subtending angle θ (in radians) at centre carrying current I is',opts:['μ₀Iθ/4πR','μ₀I/2R','μ₀Iθ/4πR²','μ₀I/4πR'],ans:0},
+  {pyq:'KCET 2022',q:'The SI unit of magnetic field B is',opts:['Oersted','Gauss','Tesla','Weber'],ans:2},
+  {pyq:'KCET 2023',q:'Shunt is a',opts:['High resistance in series with galvanometer','Low resistance in parallel with galvanometer','High resistance in parallel with galvanometer','Low resistance in series with galvanometer'],ans:1},
+  {pyq:'KCET 2021',q:'1 Tesla is equal to',opts:['1 Wb/m²','1 N/Am','1 kg/As²','All of the above'],ans:3},
+  {pyq:'KCET 2020',q:'The pole strength of a bar magnet is 40 Am. Magnetic moment of the magnet if length is 10 cm is',opts:['4 Am²','0.4 Am²','40 Am²','400 Am²'],ans:0},
+  {pyq:'KCET 2019',q:'Which of the following particles cannot be accelerated by cyclotron?',opts:['Proton','Alpha particle','Deuteron','Electron'],ans:3},
+  {pyq:'KCET 2024',q:'The ratio of magnetic moment to angular momentum of a revolving electron is',opts:['e/m','e/2m','2e/m','e/4m'],ans:1},
+  {pyq:'KCET 2023',q:'A circular coil of 30 turns, radius 8 cm carries current 6A. Its magnetic moment is',opts:['3.6 Am²','36 Am²','0.36 Am²','360 Am²'],ans:0},
+  {pyq:'KCET 2022',q:'Magnetic susceptibility of diamagnetic material is',opts:['Large and positive','Small and positive','Small and negative','Zero'],ans:2},
+  {pyq:'KCET 2021',q:'The net force on a rectangular current-carrying loop placed in a uniform magnetic field is',opts:['Zero','Maximum','Depends on orientation','BIL'],ans:0}
+];
+
+const CHEM_Q=[
+  {pyq:'KCET 2022',q:'The electronic configuration of Cr (Z=24) is',opts:['[Ar]3d⁴4s²','[Ar]3d⁵4s¹','[Ar]3d⁶4s⁰','[Ar]3d³4s²4p¹'],ans:1},
+  {pyq:'KCET 2021',q:'The element showing maximum number of oxidation states among the following is',opts:['Sc','Ti','Mn','Zn'],ans:2},
+  {pyq:'KCET 2020',q:'Which of the following transition metal ions is colourless?',opts:['Cu²⁺','Zn²⁺','Fe³⁺','Mn²⁺'],ans:1},
+  {pyq:'KCET 2023',q:'Lanthanoid contraction is due to',opts:['Poor shielding by 4f electrons','Strong shielding by 4f electrons','Increase in nuclear charge','Decrease in atomic number'],ans:0},
+  {pyq:'KCET 2022',q:'KMnO₄ in acidic medium acts as',opts:['Reducing agent','Oxidising agent','Catalyst','Buffer'],ans:1},
+  {pyq:'KCET 2021',q:'The colour of K₂Cr₂O₇ is',opts:['Yellow','Orange-red','Purple','Green'],ans:1},
+  {pyq:'KCET 2020',q:'The magnetic moment of Cu²⁺ ion is approximately',opts:['0 BM','1.73 BM','2.83 BM','3.87 BM'],ans:1},
+  {pyq:'KCET 2019',q:'Which of the following is a common oxidation state of lanthanoids?',opts:['+2','+3','+4','+5'],ans:1},
+  {pyq:'KCET 2024',q:'The electronic configuration of Cu (Z=29) is',opts:['[Ar]3d⁹4s²','[Ar]3d¹⁰4s¹','[Ar]3d⁸4s²4p¹','[Ar]3d¹⁰4s⁰'],ans:1},
+  {pyq:'KCET 2023',q:'In acidic medium, MnO₄⁻ is reduced to',opts:['MnO₂','Mn²⁺','MnO₄²⁻','Mn⁰'],ans:1},
+  {pyq:'KCET 2022',q:'The number of unpaired electrons in Mn²⁺ (Z=25) is',opts:['3','4','5','6'],ans:2},
+  {pyq:'KCET 2021',q:'Which of the following statements about transition elements is NOT correct?',opts:['They exhibit variable oxidation states','They form coloured compounds','They have catalytic properties','Zn is a typical transition element'],ans:3},
+  {pyq:'KCET 2020',q:'The highest oxidation state of Mn in its compounds is',opts:['+5','+6','+7','+8'],ans:2},
+  {pyq:'KCET 2019',q:'The colour of the compound [Ti(H₂O)₆]³⁺ is due to',opts:['s-s transition','p-p transition','d-d transition','f-f transition'],ans:2},
+  {pyq:'KCET 2024',q:'The reaction of K₂Cr₂O₇ with H₂SO₄ produces',opts:['CrSO₄','Cr₂(SO₄)₃','CrO₃','None of these'],ans:2},
+  {pyq:'KCET 2023',q:'In permanganate ion (MnO₄⁻), oxidation state of Mn is',opts:['+5','+6','+7','+4'],ans:2},
+  {pyq:'KCET 2022',q:'Which ion among the following has highest magnetic moment?',opts:['Ti³⁺ (1 unpaired e⁻)','V³⁺ (2 unpaired e⁻)','Cr³⁺ (3 unpaired e⁻)','Mn²⁺ (5 unpaired e⁻)'],ans:3},
+  {pyq:'KCET 2021',q:'The general electronic configuration of d-block elements is',opts:['(n-1)d¹⁻¹⁰ ns¹⁻²','(n-1)f¹⁻¹⁴ (n-1)d¹ ns²','(n-1)d¹⁰ ns² np¹⁻⁶','ns¹⁻² np¹⁻⁶'],ans:0},
+  {pyq:'KCET 2020',q:'Ferromagnetism is exhibited by',opts:['Cu','Zn','Fe','Al'],ans:2},
+  {pyq:'KCET 2019',q:'The oxide of which transition metal acts both as acidic and basic oxide?',opts:['MnO₂','Mn₂O₃','MnO','Mn₂O₇'],ans:0},
+  {pyq:'KCET 2024',q:'Which one of the following is NOT a characteristic of transition elements?',opts:['Variable oxidation states','Coloured ions','Formation of complex compounds','All have one oxidation state'],ans:3},
+  {pyq:'KCET 2023',q:'The number of d-block elements in 4th period is',opts:['8','10','18','14'],ans:1},
+  {pyq:'KCET 2022',q:'KMnO₄ is prepared from MnO₂ by fusion with',opts:['KNO₃','KOH','KCl','K₂SO₄'],ans:1},
+  {pyq:'KCET 2021',q:'Lanthanoid elements are placed in which period of periodic table?',opts:['5th and 6th','6th only','5th only','7th only'],ans:1},
+  {pyq:'KCET 2020',q:'All actinoids are',opts:['Radioactive','Non-radioactive','Colourless','Diamagnetic'],ans:0},
+  {pyq:'KCET 2019',q:'The formula of dichromate ion is',opts:['CrO₄²⁻','Cr₂O₇²⁻','CrO₃','Cr₂O₃'],ans:1},
+  {pyq:'KCET 2024',q:'Which of the following transition metals does not show variable oxidation states?',opts:['Fe','Zn','Mn','Ti'],ans:1},
+  {pyq:'KCET 2023',q:'The colour of MnO₄²⁻ (manganate) is',opts:['Purple','Green','Yellow','Orange'],ans:1},
+  {pyq:'KCET 2022',q:'Interstitial compounds are formed by transition metals with',opts:['O and S','H, C and N','Halogens','Noble gases'],ans:1},
+  {pyq:'KCET 2021',q:'In acidic medium, the half-cell reaction of Cr₂O₇²⁻ to Cr³⁺ involves how many electrons?',opts:['3','4','6','8'],ans:2}
+];
+
+const MATH_Q=[
+  {pyq:'KCET 2022',q:'If f(x) = (x² - 9)/(x - 3) for x ≠ 3 and f(3) = k is continuous at x = 3, then k =',opts:['3','6','9','0'],ans:1},
+  {pyq:'KCET 2021',q:'d/dx (sin⁻¹x) =',opts:['1/√(1+x²)','-1/√(1-x²)','1/√(1-x²)','-1/√(1+x²)'],ans:2},
+  {pyq:'KCET 2020',q:'d/dx (xˣ) =',opts:['xˣ ln x','xˣ(1 + ln x)','xˣ⁻¹','x·xˣ'],ans:1},
+  {pyq:'KCET 2019',q:'If y = sin(x²), then dy/dx =',opts:['cos(x²)','2x cos(x²)','2 cos(x²)','x cos(x²)'],ans:1},
+  {pyq:'KCET 2023',q:'A function f is differentiable at x = a. Which of the following is always true?',opts:['f is continuous at x = a','f has a maximum at x = a','f has a minimum at x = a','f is constant near x = a'],ans:0},
+  {pyq:'KCET 2022',q:'d/dx (tan⁻¹x) =',opts:['1/(1-x²)','1/(1+x²)','-1/(1+x²)','1/√(1-x²)'],ans:1},
+  {pyq:'KCET 2021',q:'If x = at² and y = 2at, then dy/dx =',opts:['t','1/t','2t','2/t'],ans:1},
+  {pyq:'KCET 2020',q:'d/dx (eˢⁱⁿˣ) =',opts:['eˢⁱⁿˣ','eˢⁱⁿˣ cos x','eˢⁱⁿˣ sin x','-eˢⁱⁿˣ cos x'],ans:1},
+  {pyq:'KCET 2019',q:'If f(x) = |x|, then f is',opts:['Differentiable everywhere','Continuous but not differentiable at x = 0','Neither continuous nor differentiable','Differentiable at x = 0 only'],ans:1},
+  {pyq:'KCET 2024',q:'If y = log(sin x), then d²y/dx² =',opts:['-cosec²x','-cot²x','cosec²x','cot x'],ans:0},
+  {pyq:'KCET 2023',q:'Rolle\'s theorem is applicable to f(x) = x² on [−2, 2]. The value of c is',opts:['0','1','-1','±1'],ans:0},
+  {pyq:'KCET 2022',q:'If y = x^(sin x), then dy/dx is',opts:['x^sinx · cos x · ln x','x^sinx(sin x/x + cos x · ln x)','sin x · x^(sinx-1)','x^sinx · ln(sin x)'],ans:1},
+  {pyq:'KCET 2021',q:'d/dx (cos⁻¹x) =',opts:['1/√(1-x²)','-1/√(1-x²)','1/(1+x²)','-1/(1+x²)'],ans:1},
+  {pyq:'KCET 2020',q:'If x² + y² = 25, then dy/dx =',opts:['x/y','-x/y','y/x','-y/x'],ans:1},
+  {pyq:'KCET 2019',q:'By LMVT for f(x) = x² on [1, 3], c equals',opts:['1','2','3','√5'],ans:1},
+  {pyq:'KCET 2024',q:'Which of the following is not differentiable at x = 0?',opts:['x²','x³','|x|','sin x'],ans:2},
+  {pyq:'KCET 2023',q:'d/dx (log x) =',opts:['1/x','log x','x','ln x'],ans:0},
+  {pyq:'KCET 2022',q:'If y = sin(log x), then dy/dx =',opts:['cos(log x)','cos(log x)/x','-sin(log x)/x','x cos(log x)'],ans:1},
+  {pyq:'KCET 2021',q:'For y = (1 + x)^(1/x) as x → 0, y →',opts:['1','e','0','∞'],ans:1},
+  {pyq:'KCET 2020',q:'d/dx(sec x) =',opts:['sec x tan x','-sec x tan x','sec²x','tan x'],ans:0},
+  {pyq:'KCET 2024',q:'If f(x) = x|x|, then f\'(0) equals',opts:['0','1','-1','does not exist'],ans:0},
+  {pyq:'KCET 2023',q:'The function f(x) = [x] (greatest integer) is NOT continuous at',opts:['x = 0.5','x = 1.5','x = 2','All integers'],ans:3},
+  {pyq:'KCET 2022',q:'d/dx (sin x)^(cos x) =',opts:['(sin x)^cosx[-sin x ln(sin x) + cos²x/sin x]','(sin x)^cosx · cos x · cos x','-sin x·cos x','(sin x)^cosx · (-sin x ln sin x + cos²x/sin x)'],ans:3},
+  {pyq:'KCET 2021',q:'d/dx (tan⁻¹(x/a)) =',opts:['a/(a²+x²)','1/(a²+x²)','x/(a²+x²)','-a/(a²+x²)'],ans:0},
+  {pyq:'KCET 2020',q:'For Rolle\'s theorem, which condition is NOT required?',opts:['f is continuous on [a,b]','f is differentiable on (a,b)','f(a) = f(b)','f\'(a) = 0'],ans:3},
+  {pyq:'KCET 2019',q:'If y = e^(x²), then dy/dx =',opts:['e^(x²)','2x·e^(x²)','2e^(x²)','xe^(x²)'],ans:1},
+  {pyq:'KCET 2024',q:'d/dx (x^n) at x = 1 equals',opts:['n','n-1','1','n+1'],ans:0},
+  {pyq:'KCET 2023',q:'A function y = f(x) is said to be continuous at x = a if',opts:['f(a) exists','lim f(x) exists as x→a','lim f(x) = f(a) as x→a','f is differentiable at a'],ans:2},
+  {pyq:'KCET 2022',q:'If y = sin⁻¹(2x/(1+x²)), then dy/dx =',opts:['2/(1+x²)','1/(1+x²)','-2/(1+x²)','1/(1-x²)'],ans:0},
+  {pyq:'KCET 2021',q:'d²y/dx² for y = x³ is',opts:['3x²','6x','3x','6'],ans:1}
+];
+
+// ── Mock Engine ───────────────────────────────────────────────────────────────
+const mockState={
+  phy:{q:PHY_Q,cur:0,score:0,timer:null,sec:60,answered:false,done:false},
+  chem:{q:CHEM_Q,cur:0,score:0,timer:null,sec:60,answered:false,done:false},
+  math:{q:MATH_Q,cur:0,score:0,timer:null,sec:60,answered:false,done:false}
+};
+
+function renderQ(sub){
+  const s=mockState[sub];
+  if(s.done){renderResult(sub);return;}
+  const q=s.q[s.cur];
+  const area=document.getElementById(sub+'-q-area');
+  document.getElementById(sub+'-qc').textContent=`Q ${s.cur+1}/30`;
+  s.sec=60; s.answered=false;
+  clearInterval(s.timer);
+  s.timer=setInterval(()=>tickTimer(sub),1000);
+  updateTimer(sub);
+  area.innerHTML=`
+    <div class="q-card">
+      ${q.pyq?`<div class="pyq-tag">🏆 PYQ – ${q.pyq}</div>`:''}
+      <div class="q-num">QUESTION ${s.cur+1} OF 30</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options" id="opts-${sub}">
+        ${q.opts.map((o,i)=>`<div class="opt" onclick="selectOpt('${sub}',${i})" id="opt-${sub}-${i}"><span class="opt-letter">${'ABCD'[i]}.</span>${o}</div>`).join('')}
+      </div>
+      <div class="nav-btns">
+        <button class="btn btn-skip" onclick="nextQ('${sub}')">Skip →</button>
+        <button class="btn btn-next" onclick="nextQ('${sub}')" id="btn-next-${sub}" style="display:none">Next →</button>
+        ${s.cur===29?`<button class="btn btn-submit" onclick="submitMock('${sub}')">Submit Test</button>`:''}
+      </div>
+    </div>`;
+}
+
+function tickTimer(sub){
+  const s=mockState[sub];
+  s.sec--;
+  updateTimer(sub);
+  if(s.sec<=0){clearInterval(s.timer);if(!s.answered)autoNext(sub);}
+}
+
+function updateTimer(sub){
+  const s=mockState[sub];
+  const m=Math.floor(s.sec/60),sec=s.sec%60;
+  document.getElementById(sub+'-timer').textContent=`${m}:${sec<10?'0':''}${sec}`;
+  document.getElementById(sub+'-timer').style.background=s.sec<=10?'#FFD0CC':'#FDECEC';
+}
+
+function selectOpt(sub,idx){
+  const s=mockState[sub];
+  if(s.answered)return;
+  s.answered=true;
+  clearInterval(s.timer);
+  const q=s.q[s.cur];
+  document.querySelectorAll(`#opts-${sub} .opt`).forEach((el,i)=>{
+    el.style.pointerEvents='none';
+    if(i===q.ans)el.classList.add('correct');
+    else if(i===idx&&idx!==q.ans)el.classList.add('wrong');
+  });
+  if(idx===q.ans){s.score++;document.getElementById(sub+'-score').textContent=s.score;}
+  const nb=document.getElementById('btn-next-'+sub);
+  if(nb)nb.style.display='block';
+  document.querySelector(`#${sub}-q-area .btn-skip`).style.display='none';
+}
+
+function autoNext(sub){const s=mockState[sub];s.answered=true;nextQ(sub);}
+
+function nextQ(sub){
+  const s=mockState[sub];
+  clearInterval(s.timer);
+  s.cur++;
+  if(s.cur>=30){s.done=true;renderResult(sub);}
+  else renderQ(sub);
+}
+
+function submitMock(sub){
+  const s=mockState[sub];
+  s.done=true;
+  clearInterval(s.timer);
+  renderResult(sub);
+}
+
+function renderResult(sub){
+  const s=mockState[sub];
+  const area=document.getElementById(sub+'-q-area');
+  const wrong=30-s.score;
+  const pct=Math.round(s.score/30*100);
+  area.innerHTML=`
+    <div class="result-card">
+      <div style="font-size:12px;opacity:.6;margin-bottom:8px;">TEST COMPLETE ✓</div>
+      <div class="result-score">${s.score}/30</div>
+      <div class="result-label">${pct}% accuracy</div>
+      <div class="result-grid">
+        <div class="res-stat"><div class="n">${s.score}</div><div class="l">Correct</div></div>
+        <div class="res-stat"><div class="n">${wrong}</div><div class="l">Wrong/Skip</div></div>
+        <div class="res-stat"><div class="n">${pct}%</div><div class="l">Accuracy</div></div>
+      </div>
+      <div style="margin-top:14px;font-size:11px;opacity:.7;">${pct>=80?'🔥 Excellent! Move to next subject.':pct>=60?'👍 Good. Review wrong answers carefully.':'📖 Need more practice. Re-study this chapter.'}</div>
+      <button class="btn" style="margin-top:14px;background:var(--gold);color:var(--navy);width:100%" onclick="restartMock('${sub}')">🔄 Restart Test</button>
+    </div>`;
+}
+
+function restartMock(sub){
+  const s=mockState[sub];
+  s.cur=0;s.score=0;s.done=false;s.answered=false;
+  clearInterval(s.timer);
+  document.getElementById(sub+'-score').textContent=0;
+  renderQ(sub);
+}
+
+function switchMock(sub){
+  document.querySelectorAll('.mock-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.subj-tab').forEach(b=>b.classList.remove('active','phy','chem','math'));
+  document.getElementById('mock-'+sub).classList.add('active');
+  event.currentTarget.classList.add('active',sub);
+  if(!mockState[sub].done&&mockState[sub].cur===0&&!mockState[sub].answered)renderQ(sub);
+}
+
+// Init first mock
+renderQ('phy');
+
+// ── Tracker ───────────────────────────────────────────────────────────────────
+const TASKS={
+  phy:['Biot-Savart Law + circular loop B (25 min)','Ampere\'s Law – solenoid & toroid (20 min)','Force on moving charge in B field (25 min)','Cyclotron – principle & frequency (20 min)','Torque on current loop (20 min)','Force on current conductor numericals (30 min)','Galvanometer – sensitivity & conversion (20 min)','Physics Mock Test – 30 MCQs completed','Physics Mock Analysis – reviewed all wrong answers'],
+  chem:['Electronic config exceptions: Cr & Cu (20 min)','Variable oxidation states of d-block (20 min)','Colour & magnetic properties (25 min)','Lanthanoid contraction – cause & effects (20 min)','KMnO₄ – preparation, reactions, uses (30 min)','K₂Cr₂O₇ – preparation & reactions (25 min)','Lanthanoids vs Actinoids comparison (20 min)','Chemistry Mock Test – 30 MCQs completed','Chemistry Mock Analysis – reviewed all wrong answers'],
+  math:['Continuity at a point – 5 examples (25 min)','Differentiability & LHD = RHD (20 min)','Chain rule – 8 problems (25 min)','Logarithmic differentiation – 6 problems (25 min)','Implicit differentiation – 5 problems (20 min)','Parametric differentiation (20 min)','Second order derivatives (20 min)','Rolle\'s Theorem & LMVT – 5 problems (25 min)','Maths Mock Test – 30 MCQs completed','Maths Mock Analysis – reviewed all wrong answers'],
+  overall:['Morning formula warm-up done (6:00 AM)','All 3 chapter studies completed','All 3 mock tests (90 MCQs total) attempted','All wrong answers reviewed and understood','Night revision formula run-through done','Tracker filled and saved before sleep']
+};
+
+let totalHrs=0;
+
+function buildTasks(){
+  let total=0;
+  ['phy','chem','math','overall'].forEach(sub=>{
+    const el=document.getElementById('tasks-'+sub);
+    el.innerHTML='';
+    TASKS[sub].forEach((t,i)=>{
+      el.innerHTML+=`<div class="t-item" id="ti-${sub}-${i}">
+        <div class="t-check" id="tc-${sub}-${i}" onclick="toggleTask('${sub}',${i})"></div>
+        <div class="t-text" id="tt-${sub}-${i}">${t}</div>
+        <input class="t-min" type="number" min="0" max="300" placeholder="min" id="tm-${sub}-${i}" onchange="updateHrs()"/>
+      </div>`;
+      total++;
+    });
+  });
+  document.getElementById('t-total').textContent=total;
+}
+
+function toggleTask(sub,i){
+  const check=document.getElementById('tc-'+sub+'-'+i);
+  const text=document.getElementById('tt-'+sub+'-'+i);
+  const done=check.classList.toggle('done');
+  if(done){check.textContent='✓';text.classList.add('done');}
+  else{check.textContent='';text.classList.remove('done');}
+  updateProgress();
+}
+
+function updateProgress(){
+  let done=0,total=0;
+  const subCounts={phy:0,chem:0,math:0,overall:0};
+  const subTotals={phy:TASKS.phy.length,chem:TASKS.chem.length,math:TASKS.math.length,overall:TASKS.overall.length};
+  ['phy','chem','math','overall'].forEach(sub=>{
+    TASKS[sub].forEach((_,i)=>{
+      total++;
+      if(document.getElementById('tc-'+sub+'-'+i)?.classList.contains('done')){
+        done++;subCounts[sub]++;
+      }
+    });
+  });
+  document.getElementById('t-done').textContent=done;
+  document.getElementById('t-pct').textContent=total?Math.round(done/total*100)+'%':'0%';
+  ['phy','chem','math','overall'].forEach(sub=>{
+    const pct=Math.round(subCounts[sub]/subTotals[sub]*100);
+    document.getElementById('pb-'+sub).style.width=pct+'%';
+    document.getElementById('pct-'+sub).textContent=pct+'% complete';
+  });
+}
+
+function updateHrs(){
+  let mins=0;
+  ['phy','chem','math','overall'].forEach(sub=>{
+    TASKS[sub].forEach((_,i)=>{
+      const v=parseInt(document.getElementById('tm-'+sub+'-'+i)?.value)||0;
+      mins+=v;
+    });
+  });
+  const h=Math.floor(mins/60),m=mins%60;
+  document.getElementById('t-hrs').textContent=h+'h'+(m>0?' '+m+'m':'');
+  totalHrs=mins;
+}
+
+function setFeeling(btn){
+  document.querySelectorAll('.feeling-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function saveProgress(){
+  updateProgress();updateHrs();
+  const btn=document.querySelector('.save-btn');
+  btn.textContent='✅ Progress Saved!';
+  btn.style.background='var(--chem)';
+  setTimeout(()=>{btn.innerHTML='💾 Save Today\'s Progress';btn.style.background='var(--navy)';},2500);
+}
+
+buildTasks();
+</script>
+</body>
+</html>
